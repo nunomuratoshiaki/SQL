@@ -1,0 +1,226 @@
+{
+    "rules": [
+        {
+            "rule-type": "transformation",
+            "rule-id": "1",
+            "rule-name": "1",
+            "rule-target": "schema",
+            "object-locator": {
+                "schema-name": "%"
+            },
+            "rule-action": "rename",
+            "value": "MISCOPY",
+            "old-value": null
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "2",
+            "rule-name": "2",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "MS_ACMLT_SALES"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "3",
+            "rule-name": "3",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "WK_MP_SALES_HEADER_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "4",
+            "rule-name": "4",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "WK_P_SALES_HEADER_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "5",
+            "rule-name": "5",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "SHOPPER"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "6",
+            "rule-name": "6",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "TR_P_SALES_HEADER_TP"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "7",
+            "rule-name": "7",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "WK_MP_DSSLTN_HEADER_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "8",
+            "rule-name": "8",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "EMP"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "9",
+            "rule-name": "9",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "WK_P_DSSLTN_HEADER_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "10",
+            "rule-name": "10",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "EMPWORK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "11",
+            "rule-name": "11",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "WK_SELL_OVER_CENTER_DTL"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "12",
+            "rule-name": "12",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "TEST_DATA_CD_LOG"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "13",
+            "rule-name": "13",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "TEST_DATA_LOG"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "14",
+            "rule-name": "14",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "TEST_NOR_TABLE"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "15",
+            "rule-name": "15",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "TEST_TEMP"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "16",
+            "rule-name": "16",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "TR_DSSLTN_PRCES_HEAD"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "17",
+            "rule-name": "17",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "TR_SALES_PRCES_HEAD"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "18",
+            "rule-name": "18",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "TR_STATISTICS_SALES_DTL_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "19",
+            "rule-name": "19",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "WK_CSTMR_INFO_REF_REQ"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "20",
+            "rule-name": "20",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "WK_CSTMR_INFO_REF_RSLT"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "21",
+            "rule-name": "21",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "WK_RPT_BOTH_HIS"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "22",
+            "rule-name": "22",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "WK_SLL_OVR_ORDER"
+            },
+            "rule-action": "include"
+        }
+    ]
+}

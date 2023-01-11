@@ -1,0 +1,76 @@
+{
+    "rules": [
+        {
+            "rule-type": "transformation",
+            "rule-id": "1",
+            "rule-name": "1",
+            "rule-target": "schema",
+            "object-locator": {
+                "schema-name": "%"
+            },
+            "rule-action": "rename",
+            "value": "MISBASE",
+            "old-value": null
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "2",
+            "rule-name": "2",
+            "object-locator": {
+                "schema-name": "MISBASE",
+                "table-name": "WK_TOS_SKU_IMP_HIST"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "table-settings",
+            "rule-id": "3",
+            "rule-name": "3",
+            "object-locator": {
+                "schema-name": "MISBASE",
+                "table-name": "WK_TOS_SKU_IMP_HIST"
+            },
+            "parallel-load": {
+                "type": "ranges",
+                "columns": [
+                    "SKU_IMPORT_SEQNO"
+                ],
+                "boundaries": [
+                    [
+                        "038000000"
+                    ],
+                    [
+                        "075000000"
+                    ],
+                    [
+                        "100000000"
+                    ],
+                    [
+                        "125000000"
+                    ],
+                    [
+                        "150000000"
+                    ],
+                    [
+                        "175000000"
+                    ],
+                    [
+                        "200000000"
+                    ],
+                    [
+                        "225000000"
+                    ],
+                    [
+                        "250000000"
+                    ],
+                    [
+                        "275000000"
+                    ],
+                    [
+                        "300000000"
+                    ]
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,256 @@
+{
+    "rules": [
+        {
+            "rule-type": "transformation",
+            "rule-id": "1",
+            "rule-name": "1",
+            "rule-target": "schema",
+            "object-locator": {
+                "schema-name": "%"
+            },
+            "rule-action": "rename",
+            "value": "MISSEL",
+            "old-value": null
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "2",
+            "rule-name": "2",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "MS_CRNTMNTH_FIX_SALES_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "3",
+            "rule-name": "3",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "TR_P_SALES_DETAIL_TP"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "4",
+            "rule-name": "4",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "MS_SETTLE_UP_NO_MNG_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "5",
+            "rule-name": "5",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "TR_CUSTOMER_DTL_OUT"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "6",
+            "rule-name": "6",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "MS_CRNTMNTH_FIX_DSSLTN_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "7",
+            "rule-name": "7",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "TR_PLOG_SALES_HEADER"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "8",
+            "rule-name": "8",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "TR_P_SALES_HEADER_TP"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "9",
+            "rule-name": "9",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "WK_P_SALES_HEADER_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "10",
+            "rule-name": "10",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "TR_PLOG_SLS_IN_CNTX"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "11",
+            "rule-name": "11",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "MS_CORPORATE_STORE"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "12",
+            "rule-name": "12",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "MS_TENANT_INFO_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "13",
+            "rule-name": "13",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "TR_TNT_SLS_RPT_CASH_SUM"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "14",
+            "rule-name": "14",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "TR_PLOG_DENOMI"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "15",
+            "rule-name": "15",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "TR_PLOG_SALES_DETAIL"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "16",
+            "rule-name": "16",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "TR_RCPT_QUEST_STLE_NO_ADJ"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "17",
+            "rule-name": "17",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "TR_RESTAURANT_SALES_PR"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "18",
+            "rule-name": "18",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "TR_TENANT_SLS_REPORT"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "19",
+            "rule-name": "19",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "TR_TNTRST_CASH_SUM_RPT"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "20",
+            "rule-name": "20",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "WK_MISC_RECEIPTS_LIST"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "21",
+            "rule-name": "21",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "WK_P_DENOMI_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "22",
+            "rule-name": "22",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "WK_P_SALES_HEADER_DCUT"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "23",
+            "rule-name": "23",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "WK_P_SLS_IN_CNTX_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "24",
+            "rule-name": "24",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "WK_P_SLS_IN_CNTX_DCUT"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "25",
+            "rule-name": "25",
+            "object-locator": {
+                "schema-name": "MISSEL",
+                "table-name": "WK_TENANT_SALES_CHK_LIST"
+            },
+            "rule-action": "include"
+        }
+    ]
+}

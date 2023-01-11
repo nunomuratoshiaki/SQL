@@ -1,0 +1,76 @@
+{
+    "rules": [
+        {
+            "rule-type": "transformation",
+            "rule-id": "1",
+            "rule-name": "1",
+            "rule-target": "schema",
+            "object-locator": {
+                "schema-name": "%"
+            },
+            "rule-action": "rename",
+            "value": "MISCOPY",
+            "old-value": null
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "2",
+            "rule-name": "2",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "WK_SALES_HEADER_BK"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "table-settings",
+            "rule-id": "3",
+            "rule-name": "3",
+            "object-locator": {
+                "schema-name": "MISCOPY",
+                "table-name": "WK_SALES_HEADER_BK"
+            },
+            "parallel-load": {
+                "type": "ranges",
+                "columns": [
+                    "XXXXXXXXXXXXX"
+                ],
+                "boundaries": [
+                    [
+                        "XXXXXXXXXXXXX"
+                    ],
+                    [
+                        "XXXXXXXXXXXXX"
+                    ],
+                    [
+                        "XXXXXXXXXXXXX"
+                    ],
+                    [
+                        "XXXXXXXXXXXXX"
+                    ],
+                    [
+                        "XXXXXXXXXXXXX"
+                    ],
+                    [
+                        "XXXXXXXXXXXXX"
+                    ],
+                    [
+                        "XXXXXXXXXXXXX"
+                    ],
+                    [
+                        "XXXXXXXXXXXXX"
+                    ],
+                    [
+                        "XXXXXXXXXXXXX"
+                    ],
+                    [
+                        "XXXXXXXXXXXXX"
+                    ],
+                    [
+                        "XXXXXXXXXXXXX"
+                    ]
+                ]
+            }
+        }
+    ]
+}

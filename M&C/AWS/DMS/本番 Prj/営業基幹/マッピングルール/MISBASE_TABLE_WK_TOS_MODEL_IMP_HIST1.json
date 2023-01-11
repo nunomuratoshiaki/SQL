@@ -1,0 +1,76 @@
+{
+    "rules": [
+        {
+            "rule-type": "transformation",
+            "rule-id": "1",
+            "rule-name": "1",
+            "rule-target": "schema",
+            "object-locator": {
+                "schema-name": "%"
+            },
+            "rule-action": "rename",
+            "value": "MISBASE",
+            "old-value": null
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "2",
+            "rule-name": "2",
+            "object-locator": {
+                "schema-name": "MISBASE",
+                "table-name": "WK_TOS_MODEL_IMP_HIST"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "table-settings",
+            "rule-id": "3",
+            "rule-name": "3",
+            "object-locator": {
+                "schema-name": "MISBASE",
+                "table-name": "WK_TOS_MODEL_IMP_HIST"
+            },
+            "parallel-load": {
+                "type": "ranges",
+                "columns": [
+                    "MODEL_IMPORT_SEQNO"
+                ],
+                "boundaries": [
+                    [
+                        "05000000"
+                    ],
+                    [
+                        "10000000"
+                    ],
+                    [
+                        "15000000"
+                    ],
+                    [
+                        "20000000"
+                    ],
+                    [
+                        "25000000"
+                    ],
+                    [
+                        "30000000"
+                    ],
+                    [
+                        "35000000"
+                    ],
+                    [
+                        "40000000"
+                    ],
+                    [
+                        "45000000"
+                    ],
+                    [
+                        "50000000"
+                    ],
+                    [
+                        "55000000"
+                    ]
+                ]
+            }
+        }
+    ]
+}

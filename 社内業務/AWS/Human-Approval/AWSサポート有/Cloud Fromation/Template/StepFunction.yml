@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Step Function Create
+
+Parameters:
+  RestAPI:
+    Type: String
+
+  LambdaHumanApprovalSendEmailFunction:
+    Type: String
+
+  LambdaAccountCreationFunction:
+    Type: String
+
+  LambdaStateMachineExecutionRole:
+    Type: String
+
+Resources:
+
+#Cloud Watch Log Group Create
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: StateMachinLogGroup
+
+#Step Function Create
+  StepFunction:
+    Type: AWS::Serverless::StateMachine
+    DependsOn:
+      - LogGroup
+    Properties:
+      Name: AccountCreation
+      Role: !Ref LambdaStateMachineExecutionRole
+      Logging:
+        Level: ALL
+        IncludeExecutionData: true
+        Destinations:
+          - CloudWatchLogsLogGroup:
+              LogGroupArn: !GetAtt LogGroup.Arn
+      DefinitionUri: 
+        Bucket: accountcreationXXXXXXXXXXXX/code/asl
+        Key: StateMachin.json
+      DefinitionSubstitutions:
+        LambdaHumanApprovalSendEmailFunction: !Ref LambdaHumanApprovalSendEmailFunction
+        ApiEndpoint: !Sub 'https://${RestAPI}.execute-api.${AWS::Region}.amazonaws.com/states'
+        LambdaAccountCreationFunction: !Ref LambdaAccountCreationFunction
+
+Outputs:
+  StateMachineHumanApproval:
+    Value: !Ref StepFunction
+    Export:
+      Name: StateMachineHumanApproval

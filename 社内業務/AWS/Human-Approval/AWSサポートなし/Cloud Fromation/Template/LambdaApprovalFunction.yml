@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Lambda function that callback to AWS Step Functions
+
+Parameters:
+  Areyougoingtodeploytotestingsite:
+    Type: String
+  
+  RestAPI:
+    Type: String
+
+  LambdaAPIGatewayRole:
+    Type: String
+
+Resources:
+  
+#Lambda Create
+  LambdaApprovalFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs14.x
+      CodeUri: 's3://accountcreationXXXXXXXXXXXX/code/approvel/LambdaApprovalFunction.zip'
+      Description: Lambda function that callback to AWS Step Functions
+      MemorySize: 128
+      Timeout: 3
+      Role: !Ref LambdaAPIGatewayRole
+      Environment:
+        Variables:
+          DEBUG_MODE: !Sub '${Areyougoingtodeploytotestingsite}'
+
+#Lambda Permission Create
+  LambdaAPIGatewayInvoke:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !GetAtt 'LambdaApprovalFunction.Arn'
+      Principal: 'apigateway.amazonaws.com'
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestAPI}/*'
+
+Outputs:
+  LambdaApproval:
+    Value: !GetAtt LambdaApprovalFunction.Arn
+    Export:
+      Name: LambdaApprovalFunction

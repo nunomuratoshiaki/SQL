@@ -1,0 +1,244 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Master stack
+
+Metadata:
+  AWS::CloudFormation::InterFace:
+    ParameterGroups:
+      - Label:
+          default: IAM Configration
+        Parameters:
+          - IAMRoleTemplateURL 
+
+      - Label:
+          default: SES Configration
+        Parameters:
+          - SESTemplateURL
+          - DomainCreate
+          - EmailDomain
+
+      - Label:
+          default: API Gateway Conditions
+        Parameters:
+          - RestAPITemplateURL
+          - APIGatewayTemplateURL
+
+      - Label:
+          default: StepFunction Conditions
+        Parameters:
+          - StepFunctionTemplateURL
+
+      - Label:
+          default: Lambda Conditions
+        Parameters:
+          - LambdaApprovalTemplateURL
+          - LambdaSendEmailTemplateURL
+          - LambdaAccountCreationTemplateURL
+          - Support_Mail_Address
+          - Approver_Mail_Address          
+          - DEBUG_MODE
+          - OrgRootID
+          - OrgUnitID
+    
+    ParameterLabels:
+      IAMRoleTemplateURL:
+        default: IAMRoleTemplateURL
+      
+      SESTemplateURL:
+        default: SESTemplateURL
+
+      DomainCreate:
+        default:DomainCreate
+
+      EmailDomain:
+        default: EmailDomain    
+
+      RestAPITemplateURL:
+        default: RestAPITemplateURL
+
+      APIGatewayTemplateURL:
+        default: APIGatewayTemplateURL
+        
+      StepFunctionTemplateURL:
+        default: StepFunctionTemplateURL
+
+      LambdaApprovalTemplateURL:
+        default: LambdaApprovalTemplateURL
+
+      LambdaSendEmailTemplateURL:
+        default: LambdaSendEmailTemplateURL
+
+      LambdaAccountCreationTemplateURL:
+        default: LambdaAccountCreationTemplateURL
+
+      Support_Mail_Address:
+        default: SupportMailAddress
+
+      Approver_Mail_Address:
+        default: ApproverMailAddress
+
+      DEBUG_MODE:
+        default: Areyougoingtodeploytotestingsite
+
+      OrgRootID:
+        default: OrgRootID
+      
+      OrgUnitID:
+        default: OrgUnitID
+
+Parameters:
+  DomainCreate:
+    Type: String
+    AllowedValues:
+      - true
+      - false
+
+  EmailDomain:
+    Type: String
+    Default: ashisuto.co.jp
+  
+  SupportMailAddress:
+    Type: String
+    Default: aws_tec@ashisuto.co.jp
+
+  ApproverMailAddress:
+    Type: String
+    Default: awssp_ship@ashisuto.co.jp
+
+  Areyougoingtodeploytotestingsite:
+    Type: String
+    AllowedValues:
+      - true
+      - false
+
+  OrgRootID:
+    Type: String
+
+  OrgUnitID:
+    Type: String
+  
+  IAMRoleTemplateURL:
+    Type: String
+    Default: https://accountcreationXXXXXXXXXXXX.s3.ap-northeast-1.amazonaws.com/IAMRole.yml
+
+  RestAPITemplateURL:
+    Type: String
+    Default: https://accountcreationXXXXXXXXXXXX.s3.ap-northeast-1.amazonaws.com/RestAPI.yml
+  
+  APIGatewayTemplateURL:
+    Type: String
+    Default: https://accountcreationXXXXXXXXXXXX.s3.ap-northeast-1.amazonaws.com/APIGateway.yml
+  
+  SESTemplateURL:
+    Type: String
+    Default: https://accountcreationXXXXXXXXXXXX.s3.ap-northeast-1.amazonaws.com/SES.yml
+
+  StepFunctionTemplateURL:
+    Type: String
+    Default: https://accountcreationXXXXXXXXXXXX.s3.ap-northeast-1.amazonaws.com/StepFunction.yml
+
+  LambdaApprovalTemplateURL:
+    Type: String
+    Default: https://accountcreationXXXXXXXXXXXX.s3.ap-northeast-1.amazonaws.com/LambdaApprovalFunction.yml
+
+  LambdaSendEmailTemplateURL:
+    Type: String
+    Default: https://accountcreationXXXXXXXXXXXX.s3.ap-northeast-1.amazonaws.com/LambdaHumanApprovalSendEmailFunction.yml
+
+  LambdaAccountCreationTemplateURL:
+    Type: String
+    Default: https://accountcreationXXXXXXXXXXXX.s3.ap-northeast-1.amazonaws.com/LambdaAccountCreationFunction.yml
+
+Conditions:
+  DomainCreate: !Equals [!Ref DomainCreate, true]
+
+Resources:
+
+#IAM Role Create
+  IAMRole:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Ref IAMRoleTemplateURL
+
+#Rest API Create
+  RestAPI:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Ref RestAPITemplateURL
+
+#API Gateway Create
+  APIGateway:
+    DependsOn:
+      - StepFunction
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Ref APIGatewayTemplateURL
+      Parameters:
+        LambdaApprovalFunction: !GetAtt LambdaApproval.Outputs.LambdaApproval
+        RestAPI: !GetAtt RestAPI.Outputs.RestAPI
+        ExecutionResource: !GetAtt RestAPI.Outputs.ExecutionResource
+        StartStepFunctionResource: !GetAtt  RestAPI.Outputs.StartStepFunctionResource
+        StepFunction: !GetAtt StepFunction.Outputs.StateMachineHumanApproval
+        LambdaAPIGatewayRole: !GetAtt IAMRole.Outputs.LambdaAPIGatewayRole
+        APIGatewayCloudWatchLogsRole: !GetAtt IAMRole.Outputs.APIGatewayCloudWatchLogsRole
+
+#SES Create
+  SES:
+    Condition: DomainCreate
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Ref SESTemplateURL
+      Parameters:
+        EmailDomain: !Sub '${EmailDomain}'
+
+#Step Function Create
+  StepFunction:
+    DependsOn:
+      - LambdaSendEmail
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Ref StepFunctionTemplateURL
+      Parameters:
+        LambdaAccountCreationFunction: !GetAtt LambdaAccountCreation.Outputs.LambdaAccountCreation 
+        LambdaHumanApprovalSendEmailFunction: !GetAtt LambdaSendEmail.Outputs.LambdaSendEmail
+        RestAPI: !GetAtt RestAPI.Outputs.RestAPI
+        LambdaStateMachineExecutionRole: !GetAtt IAMRole.Outputs.LambdaStateMachineExecutionRole
+
+#Lambda Approval Create
+  LambdaApproval:
+    DependsOn:
+      - RestAPI
+      - IAMRole
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Ref LambdaApprovalTemplateURL
+      Parameters:
+        RestAPI: !GetAtt RestAPI.Outputs.RestAPI
+        Areyougoingtodeploytotestingsite: !Sub '${Areyougoingtodeploytotestingsite}'
+        LambdaAPIGatewayRole: !GetAtt IAMRole.Outputs.LambdaAPIGatewayRole
+
+#Lambda SendEmail Create
+  LambdaSendEmail:
+    DependsOn:
+      - IAMRole
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Ref LambdaSendEmailTemplateURL
+      Parameters:
+        SupportMailAddress: !Sub '${SupportMailAddress}'
+        ApproverMailAddress: !Sub '${ApproverMailAddress}'
+        Areyougoingtodeploytotestingsite: !Sub '${Areyougoingtodeploytotestingsite}'
+        LambdaSendEmailRole: !GetAtt IAMRole.Outputs.LambdaSendEmailRole
+
+#Lambda Account Create
+  LambdaAccountCreation:
+    DependsOn:
+      - IAMRole
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Ref LambdaAccountCreationTemplateURL
+      Parameters:
+        ApproverMailAddress: !Sub '${ApproverMailAddress}'
+        SupportMailAddress: !Sub '${SupportMailAddress}'
+        LambdaAccountCreationRole: !GetAtt IAMRole.Outputs.LambdaAccountCreationRole
+        OrgRootID: !Sub '${OrgRootID}'
+        OrgUnitID: !Sub '${OrgUnitID}'

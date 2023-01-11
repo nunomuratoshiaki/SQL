@@ -1,0 +1,187 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: IAM Role Create
+
+Parameters:
+  awsExampleManagedPolicyParameterOne:
+    Type: String
+    Default: arn:aws:iam::aws:policy/CloudWatchFullAccess
+
+  awsExampleManagedPolicyParameterTwo:
+    Type: String
+    Default: arn:aws:iam::aws:policy/AWSStepFunctionsFullAccess
+
+  awsExampleManagedPolicyParameterThree:
+    Type: String
+    Default: arn:aws:iam::aws:policy/AmazonSESFullAccess
+
+Resources:
+
+#Lambda Send Email IAM Role Create
+  LambdaSendEmailRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - 'lambda.amazonaws.com'
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - !Ref awsExampleManagedPolicyParameterThree
+      Policies:
+        - PolicyName: CloudWatchLogsPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'logs:CreateLogGroup'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: !Sub 'arn:${AWS::Partition}:logs:*:*:*'
+
+#Lambda Account Creation IAM Role Create
+  LambdaAccountCreationRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - 'lambda.amazonaws.com'
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: LambdaAccountCreationRolePolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'states:*'
+                  - 'organizations:*'
+                  - 'secretsmanager:*'
+                  - 'ses:*'
+                  - 'cloudwatch:*'
+                  - 's3:*'
+                  - 'logs:*'
+                  - 'lambda:*'
+                  - 'cloudformation:*'
+                Resource:
+                  - '*'
+
+#Lambda Approval API Gateway IAM Role Creation
+  LambdaAPIGatewayRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - 'apigateway.amazonaws.com'
+                - 'lambda.amazonaws.com'
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: CloudWatchLogsPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'logs:*'
+                Resource: !Sub 'arn:${AWS::Partition}:logs:*:*:*'
+        - PolicyName: StepFunctionsPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'states:SendTaskFailure'
+                  - 'states:SendTasKSuccess'
+                  - 'states:StartExecution'
+                Resource:
+                  - '*'
+
+#API Gateway IAM Role Create
+  APIGatewayCloudWatchLogsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - 'apigateway.amazonaws.com'
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: APIGatewayLogsPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'logs:*'
+                Resource: !Sub 'arn:${AWS::Partition}:logs:*:*:*'
+
+#Stete Machine IAM Role Create
+  LambdaStateMachineExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - 'states.amazonaws.com'
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - !Ref awsExampleManagedPolicyParameterOne
+        - !Ref awsExampleManagedPolicyParameterTwo
+      Policies:
+        - PolicyName: InvokeCallbackLambda
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'lambda:InvokeFunction'
+                Resource:
+                  - '*'
+
+Outputs:
+  LambdaSendEmailRole:
+    Value: !GetAtt LambdaSendEmailRole.Arn
+    Export:
+      Name: LambdaSendEmailRole
+
+  LambdaAccountCreationRole:
+    Value: !GetAtt LambdaAccountCreationRole.Arn
+    Export:
+      Name: LambdaAccountCreationRole
+
+  LambdaAPIGatewayRole:
+    Value: !GetAtt LambdaAPIGatewayRole.Arn
+    Export:
+      Name: LambdaAPIGatewayRole
+
+  APIGatewayCloudWatchLogsRole:
+    Value: !GetAtt APIGatewayCloudWatchLogsRole.Arn
+    Export:
+      Name: APIGatewayCloudWatchLogsRole
+
+  LambdaStateMachineExecutionRole:
+    Value: !GetAtt LambdaStateMachineExecutionRole.Arn
+    Export:
+      Name: LambdaStateMachineExecutionRole
